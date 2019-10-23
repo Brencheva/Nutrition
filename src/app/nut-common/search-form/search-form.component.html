@@ -1,0 +1,16 @@
+<form [formGroup]="queryForm"
+      (submit)="getRecipes(queryForm.controls.query.value)">
+  <input type="text" formControlName="query">
+</form>
+
+<ul *ngIf="recipes">
+  <li *ngFor="let recipe of recipes">
+    <span>{{recipe.label}}</span>
+    <img [src]="recipe.image" alt="recipe">
+    <ul>
+      <li *ngFor="let ingredient of recipe.ingredients">
+        {{ingredient.text}}
+      </li>
+    </ul>
+  </li>
+</ul>
