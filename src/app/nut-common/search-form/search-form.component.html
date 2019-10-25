@@ -1,16 +1,110 @@
-<form [formGroup]="queryForm"
+<h1>What recipe would you like to find?</h1>
+
+<form class="margin-bottom"
+      [formGroup]="queryForm"
       (submit)="getRecipes(queryForm.controls.query.value)">
-  <input type="text" formControlName="query">
+  <input class="margin-right"
+         formControlName="query"
+         type="text"
+         placeholder="Insert any query"
+         autofocus>
+
+  <button class="margin-right"
+          [ngClass]="{'margin-bottom': filterIsShown}"
+          type="button"
+          (click)="toggleFilter()">
+    {{filterIsShown ? 'Hide filter' : 'Use filter'}}
+  </button>
+
+  <button type="submit">Get recipes</button>
+
+  <div *ngIf="filterIsShown"
+       class="filter">
+    <div class="display-flex align-items-start">
+      <fieldset class="filter__fieldset">
+        <legend>
+          Choose prefer dish
+        </legend>
+
+        <ul *ngFor="let dish of dishTypes">
+          <li>
+            <p>
+              <input [checked]="dish.checked"
+                     (change)="dish.checked = !dish.checked"
+                     type="checkbox"
+                     [id]="dish.value">
+              <label [for]="dish.value">{{dish.value}}</label>
+            </p>
+          </li>
+        </ul>
+      </fieldset>
+
+      <fieldset class="filter__fieldset">
+        <legend>
+          Choose prefer cuisine
+        </legend>
+
+        <ul *ngFor="let cuisine of cuisineTypes">
+          <li>
+            <p>
+              <input [checked]="cuisine.checked"
+                     (change)="cuisine.checked = !cuisine.checked"
+                     type="checkbox"
+                     [id]="cuisine.value">
+              <label [for]="cuisine.value">{{cuisine.value}}</label>
+            </p>
+          </li>
+        </ul>
+      </fieldset>
+
+      <fieldset class="filter__fieldset">
+        <legend>
+          Choose prefer meal
+        </legend>
+
+        <ul *ngFor="let meal of mealTypes">
+          <li>
+            <p>
+              <input [checked]="meal.checked"
+                     (change)="meal.checked = !meal.checked"
+                     type="checkbox"
+                     [id]="meal.value">
+              <label [for]="meal.value">{{meal.value}}</label>
+            </p>
+          </li>
+        </ul>
+      </fieldset>
+    </div>
+  </div>
 </form>
 
-<ul *ngIf="recipes">
-  <li *ngFor="let recipe of recipes">
-    <span>{{recipe.label}}</span>
-    <img [src]="recipe.image" alt="recipe">
-    <ul>
-      <li *ngFor="let ingredient of recipe.ingredients">
-        {{ingredient.text}}
-      </li>
-    </ul>
-  </li>
-</ul>
+<div *ngIf="!filterIsShown && (selectedCuisineTypes.length || selectedDishTypes.length || selectedMealTypes.length)">
+  <p>Chosen option:</p>
+
+  <ol>
+    <li *ngIf="selectedCuisineTypes.length">
+      Cuisine type:
+      <ul>
+        <li *ngFor="let cuisine of selectedCuisineTypes">{{cuisine}}</li>
+      </ul>
+    </li>
+
+    <li *ngIf="selectedDishTypes.length">
+      Cuisine type:
+      <ul>
+        <li *ngFor="let dish of selectedDishTypes">{{dish}}</li>
+      </ul>
+    </li>
+
+    <li *ngIf="selectedMealTypes.length">
+      Cuisine type:
+      <ul>
+        <li *ngFor="let meal of selectedMealTypes">{{meal}}</li>
+      </ul>
+    </li>
+  </ol>
+</div>
+
+<span *ngIf="recipesIsFetching">We are finding recipes by your query</span>
+
+<span *ngIf="errorMessage">{{errorMessage}}</span>
