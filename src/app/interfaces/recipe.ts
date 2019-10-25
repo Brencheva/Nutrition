@@ -1,17 +1,17 @@
 export class Recipe {
-  uri: string;
-  label: string;
-  image: string;
-  source: string;
-  url: string;
-  yield: number;
   calories: any;
-  totalWeight: any;
-  ingredients: Ingredient[];
-  totalNutrients: NutrientInfo[];
-  totalDaily: NutrientInfo[];
   dietLabels: DietType[];
   healthLabels: HealthType[];
+  ingredients: Ingredient[];
+  image: string;
+  label: string;
+  source: string;
+  totalDaily: NutrientInfo[];
+  totalNutrients: NutrientInfo[];
+  totalWeight: any;
+  uri: string;
+  url: string;
+  yield: number;
 }
 
 export interface Ingredient {
@@ -54,4 +54,42 @@ export enum HealthType {
   SOY_FREE = 'soy-free',
   FISH_FREE = 'fish-free',
   SHELIFISH_FREE = 'shellfish-free'
+}
+
+export enum MealType {
+  BREAKFAST = 'Breakfast',
+  LUNCH = 'Lunch',
+  DINNER = 'Dinner',
+  SNACK = 'Snack'
+}
+
+export enum DishType {
+  BREAD = 'Bread',
+  CEREALS = 'CerealS',
+  CONSIMENTS_AND_SAUCES = 'Condiments and sauces',
+  DRINKS = 'Drinks',
+  DESSERTS = 'Desserts',
+  MAIN_COURSE = 'Main course',
+  PANCAKE = 'Pancake',
+  PREPS = 'Preps',
+  PRESERVE = 'Preserve',
+  SALAD = 'Salad',
+  SANDWICHES = 'Sandwiches',
+  SIDE = 'Side dish',
+  DISH = 'Soup',
+  STARTER = 'Starter',
+  SWEETS = 'Sweets'
+}
+
+export enum CuisineType {
+  AMERICAN = 'American',
+  ASIAN = 'Asian',
+  BRITICH = 'British',
+  CARIBBEAN = 'Caribbean',
+  CENTRAL_EUROPE = 'Central Europe'
+}
+
+export interface FilterValue {
+  value: string,
+  checked: boolean;
 }
