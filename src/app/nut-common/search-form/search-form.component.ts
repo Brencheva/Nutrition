@@ -15,7 +15,10 @@ import {EMPTY, Subject} from 'rxjs';
 )
 export class SearchFormComponent implements OnInit, OnDestroy {
   queryForm: FormGroup = new FormGroup(
-    {query: new FormControl()}
+    {
+      query: new FormControl(),
+      excluded: new FormControl()
+    }
   );
 
   errorMessage: string;
@@ -54,20 +57,24 @@ export class SearchFormComponent implements OnInit, OnDestroy {
     return values.map((value: string) => ({value, checked: false}));
   };
 
-  getRecipes = (query: string): void => {
+  getRecipes = (): void => {
+    if (this.queryForm.invalid) {
+      return;
+    }
+
     this.filterIsShown = false;
     this.recipesIsFetching = true;
+    this.errorMessage = null;
     this.store.setState(StoreField.RECIPES, null);
 
     this.selectedCuisineTypes = this.getSelectedValues(this.cuisineTypes);
     this.selectedDishTypes = this.getSelectedValues(this.dishTypes);
     this.selectedMealTypes = this.getSelectedValues(this.mealTypes);
 
-    this.recipeSearcher.getRecipes(query, this.selectedCuisineTypes, this.selectedDishTypes, this.selectedMealTypes)
+    this.recipeSearcher.getRecipes(this.queryForm.controls.query.value, this.queryForm.controls.excluded.value,  this.selectedCuisineTypes, this.selectedDishTypes, this.selectedMealTypes)
       .pipe(
         tap((recipes: Recipe[]) => {
           this.store.setState(StoreField.RECIPES, recipes);
-          this.errorMessage = null;
         }),
         catchError((errorMessage: string) => {
           this.errorMessage = errorMessage;

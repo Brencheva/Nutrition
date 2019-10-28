@@ -2,10 +2,12 @@
 
 <form class="margin-bottom"
       [formGroup]="queryForm"
-      (submit)="getRecipes(queryForm.controls.query.value)">
+      ngNativeValidate
+      (submit)="getRecipes()">
   <input class="margin-right"
          formControlName="query"
          type="text"
+         required
          placeholder="Insert any query"
          autofocus>
 
@@ -20,6 +22,12 @@
 
   <div *ngIf="filterIsShown"
        class="filter">
+    <P>
+      <label class="margin-right"
+             for="excluded">Excluded ingredients</label>
+      <input type="text" id="excluded"
+             formControlName="excluded">
+    </P>
     <div class="display-flex align-items-start">
       <fieldset class="filter__fieldset">
         <legend>

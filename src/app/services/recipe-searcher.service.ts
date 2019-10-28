@@ -14,11 +14,12 @@ export class RecipeSearcherService {
   constructor(private http: HttpClient) {
   }
 
-  getRecipes = (query: string, cuisineTypes: string[] = [], dishTypes: string[] = [], mealTypes: string[] = []): Observable<Recipe[]> => {
+  getRecipes = (query: string, excluded: string, cuisineTypes: string[] = [], dishTypes: string[] = [], mealTypes: string[] = []): Observable<Recipe[]> => {
     const params = {
       app_id: Registration.APP_ID,
       app_key: Registration.APP_KEY,
       q: query,
+      excluded,
       cuisineType: cuisineTypes,
       dishType: dishTypes,
       mealType: mealTypes
