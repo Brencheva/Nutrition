@@ -1,15 +1,15 @@
 export enum Registration {
-  APP_ID = '27081821',
+  APP_ID = 'e8287f73',
 
-  APP_KEY = '146fafdb47c03d54cd1b62a0ecebffa2'
+  APP_KEY = 'd9d8c8f35811c9711d6af44a8aa94984'
 }
 
 export enum Domain {
   BASE = 'https://api.edamam.com',
 
-  NUTRIENTS = '/api/food-database/nutrients',
+  NUTRIENTS = '/api/food-database/v2/nutrients',
 
-  PARSER = '/api/food-database/parser',
+  PARSER = '/api/food-database/v2/parser',
 
   SEARCH = '/search'
 }
