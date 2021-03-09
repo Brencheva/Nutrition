@@ -1,0 +1,15 @@
+<div>
+  <h2>{{recipe.label}}</h2>
+
+  <img [src]="recipe.image" alt="recipe">
+
+  <h3>You need:</h3>
+
+  <ul>
+    <li *ngFor="let ingredient of recipe.ingredients">
+      {{ingredient.text}}
+    </li>
+  </ul>
+
+  <a [href]="recipe.url" target="_blank">Original recipe</a>
+</div>

@@ -1,0 +1,13 @@
+<ul>
+  <li *ngFor="let recipe of recipes$ | async">
+    <app-recipe [recipe]="recipe"></app-recipe>
+
+    <p>
+      <input [checked]="isFavorite(recipe)"
+             (change)="saveRecipe(recipe)"
+             type="checkbox"
+             [id]="recipe.url">
+      <label [for]="recipe.url">Save the recipe</label>
+    </p>
+  </li>
+</ul>

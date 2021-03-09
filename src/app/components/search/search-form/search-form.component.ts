@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { RecipeService } from '../../services/recipe.service';
+import { RecipeService } from '../../../services/recipe.service';
 import { finalize } from 'rxjs/operators';
-import { CuisineType, DishType, FilterValue, MealType } from '../../interfaces/recipe';
+import { CuisineType, DishType, FilterValue, MealType } from '../../../interfaces/recipe';
 
 @Component(
   {

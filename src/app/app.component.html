@@ -1,3 +1,10 @@
-<app-search-form></app-search-form>
+<header>
+  <a class="link"
+    routerLink="/search"
+  routerLinkActive="link--active">Find recipes</a>
+  <a class="link"
+    routerLink="/saved"
+  routerLinkActive="link--active">Saved recipes</a>
+</header>
 
-<app-recipes></app-recipes>
+<router-outlet></router-outlet>

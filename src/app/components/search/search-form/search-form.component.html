@@ -1,5 +1,3 @@
-<h1>What recipe would you like to find?</h1>
-
 <form class="margin-bottom"
       [formGroup]="queryForm"
       ngNativeValidate
@@ -21,7 +19,7 @@
   <button type="submit"
   [disabled]="queryForm.invalid">Get recipes</button>
 
-  <div *ngIf="filterIsShown"
+  <div [hidden]="!filterIsShown"
        class="filter">
     <P>
       <label class="margin-right"

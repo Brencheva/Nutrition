@@ -1,4 +1,4 @@
-export class Recipe {
+export interface Recipe {
   calories: any;
   dietLabels: DietType[];
   healthLabels: HealthType[];
@@ -23,7 +23,7 @@ export interface Ingredient {
 }
 
 
-export class NutrientInfo {
+export interface NutrientInfo {
   uri: string;
   label: string;
   quantity: any;

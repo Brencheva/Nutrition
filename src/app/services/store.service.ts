@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { distinctUntilChanged, map } from 'rxjs/operators';
+import { Recipe } from '../interfaces/recipe';
 import { Store } from '../interfaces/store';
 
 @Injectable({
@@ -13,6 +14,7 @@ export class StoreService {
   constructor() {
     this.store = new BehaviorSubject<Store>({
       recipes: [],
+      savedRecipes: new Set<Recipe>()
     });
     this.store$ = this.store.asObservable();
   }
