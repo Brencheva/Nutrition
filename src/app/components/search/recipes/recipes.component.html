@@ -4,7 +4,7 @@
 
     <p>
       <input [checked]="isFavorite(recipe)"
-             (change)="saveRecipe(recipe)"
+             (change)="toggleRecipe(recipe)"
              type="checkbox"
              [id]="recipe.url">
       <label [for]="recipe.url">Save the recipe</label>

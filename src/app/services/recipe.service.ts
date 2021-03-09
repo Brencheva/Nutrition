@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
-import { switchMap, tap } from 'rxjs/operators';
-import { HttpClient } from '@angular/common/http';
-import { apiParams, Domain } from '../domain/api';
+import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
 import { Recipe } from '../interfaces/recipe';
 import { StoreService } from './store.service';
+import { ApiService, SearchRecipesParams } from './api.service';
 
 @Injectable(
   {
@@ -12,34 +11,21 @@ import { StoreService } from './store.service';
   }
 )
 export class RecipeService {
-  constructor(private http: HttpClient,
+  constructor(private apiService: ApiService,
               private store: StoreService) {
   }
 
-  getRecipes(query: string, excluded: string, cuisineType: string[] = [], dishType: string[] = [], mealType: string[] = []): Observable<Recipe[]> {
-    const params = {
-      ...apiParams,
-      q: query,
-      excluded,
-      cuisineType,
-      dishType,
-      mealType
-    };
+  getRecipes(searchParams: SearchRecipesParams): Observable<Recipe[]> {
     this.store.setItem('recipes', null);
 
-    return this.http.get(`${ Domain.BASE }${ Domain.SEARCH }`, { params })
+    return this.apiService.getRecipes(searchParams)
       .pipe(
-        switchMap((ingredients: any) => of(ingredients.hits.map((hit) => hit.recipe))),
         tap((recipes: Recipe[]) => {
           if (!recipes.length) {
-            console.error('Couldn\'t find recipes with query: \n recipes \n\%o \nquery = \%s', recipes, query);
-
-            throw new Error('We couldn\'t find anything. Try to change the query.');
+            throw new Error('Nothing found');
           }
         }),
-        tap((recipes: Recipe[]) => {
-          this.store.setItem('recipes', recipes);
-        }),
+        tap((recipes: Recipe[]) => this.store.setItem('recipes', recipes)),
       );
   }
 }

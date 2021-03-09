@@ -12,22 +12,24 @@ import { Observable } from 'rxjs';
 )
 export class RecipesComponent implements OnInit {
   recipes$: Observable<Recipe[]>;
-  favoriteRecipes: Set<Recipe>;
+  savedRecipes: Set<Recipe>;
 
   constructor(private store: StoreService) {
   }
 
   ngOnInit() {
     this.recipes$ = this.store.getItem$('recipes');
-    this.favoriteRecipes = this.store.getItem('savedRecipes');
+    this.savedRecipes = this.store.getItem('savedRecipes');
   }
 
-  saveRecipe(recipe: Recipe) {
-    this.favoriteRecipes.has(recipe) ? this.favoriteRecipes.delete(recipe) : this.favoriteRecipes.add(recipe);
-    this.store.setItem('savedRecipes', this.favoriteRecipes);
+  toggleRecipe(recipe: Recipe) {
+    this.savedRecipes.has(recipe)
+      ? this.savedRecipes.delete(recipe)
+      : this.savedRecipes.add(recipe);
+    this.store.setItem('savedRecipes', this.savedRecipes);
   }
 
   isFavorite(recipe: Recipe) {
-    return this.favoriteRecipes.has(recipe);
+    return this.savedRecipes.has(recipe);
   }
 }

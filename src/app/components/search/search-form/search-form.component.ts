@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { RecipeService } from '../../../services/recipe.service';
-import { finalize } from 'rxjs/operators';
+import { catchError, finalize } from 'rxjs/operators';
 import { CuisineType, DishType, FilterValue, MealType } from '../../../interfaces/recipe';
+import { SearchRecipesParams } from '../../../services/api.service';
+import { EMPTY } from 'rxjs';
 
 @Component(
   {
@@ -52,8 +54,20 @@ export class SearchFormComponent implements OnInit {
     this.selectedDishTypes = this.getSelectedValues(this.dishTypes);
     this.selectedMealTypes = this.getSelectedValues(this.mealTypes);
 
-    this.recipeService.getRecipes(this.queryForm.controls.query.value, this.queryForm.controls.excluded.value, this.selectedCuisineTypes, this.selectedDishTypes, this.selectedMealTypes)
+    const params: SearchRecipesParams = {
+      q: this.queryForm.value.query,
+      excluded: this.queryForm.value.excluded,
+      cuisineType: this.selectedCuisineTypes,
+      dishType: this.selectedDishTypes,
+      mealType: this.selectedMealTypes
+    };
+
+    this.recipeService.getRecipes(params)
       .pipe(
+        catchError((error) => {
+          this.errorMessage = error;
+          return EMPTY;
+        }),
         finalize(() => this.recipesIsFetching = false)
       )
       .subscribe();
