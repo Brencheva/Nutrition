@@ -1,32 +1,38 @@
-import {EventEmitter, Injectable} from '@angular/core';
-import {filter, map, startWith} from 'rxjs/operators';
+import { Injectable } from '@angular/core';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { distinctUntilChanged, map } from 'rxjs/operators';
+import { Store } from '../interfaces/store';
 
 @Injectable({
   providedIn: 'root'
 })
 export class StoreService {
-  private _store: Map<StoreField, any> = new Map();
+  private store: BehaviorSubject<Store>;
+  public store$: Observable<Store>;
 
-  private _state$: EventEmitter<any> = new EventEmitter<any>();
+  constructor() {
+    this.store = new BehaviorSubject<Store>({
+      recipes: [],
+    });
+    this.store$ = this.store.asObservable();
+  }
 
-  setState = (key: StoreField, state: any): void => {
-    this._store.set(key, state);
-    this._state$.emit(key);
-  };
+  public setItem(key: keyof Store, value: any) {
+    this.store.next({
+      ...this.store.getValue(),
+      [key]: value,
+    });
+  }
 
-  getState = (key: StoreField): any => {
-    return this._store.get(key);
-  };
+  public getItem(key: keyof Store): any {
+    return this.store.getValue()[key];
+  }
 
-  onStateUpdate$ = (stateKey: StoreField) => {
-    return this._state$.pipe(
-      startWith(stateKey),
-      filter((changedKey: StoreField) => changedKey === stateKey),
-      map((changedKey: StoreField) => this.getState(changedKey))
-    );
-  };
-}
-
-export enum StoreField {
-  RECIPES = 'recipes'
+  public getItem$(key: keyof Store): Observable<any> {
+    return this.store$
+      .pipe(
+        map((store: Store) => store[key]),
+        distinctUntilChanged(),
+      );
+  }
 }

@@ -18,7 +18,8 @@
     {{filterIsShown ? 'Hide filter' : 'Use filter'}}
   </button>
 
-  <button type="submit">Get recipes</button>
+  <button type="submit"
+  [disabled]="queryForm.invalid">Get recipes</button>
 
   <div *ngIf="filterIsShown"
        class="filter">
@@ -113,6 +114,6 @@
   </ol>
 </div>
 
-<span *ngIf="recipesIsFetching">We are finding recipes by your query</span>
+<span *ngIf="recipesIsFetching">We are looking for recipes by your query</span>
 
 <span *ngIf="errorMessage">{{errorMessage}}</span>

@@ -1,5 +1,5 @@
-<ul *ngIf="recipes">
-  <li *ngFor="let recipe of recipes">
+<ul>
+  <li *ngFor="let recipe of recipes$ | async">
     <h2>{{recipe.label}}</h2>
 
     <img [src]="recipe.image" alt="recipe">
@@ -13,5 +13,7 @@
     </ul>
 
     <a [href]="recipe.url" target="_blank">Original recipe</a>
+
+    <button">Save</button>
   </li>
 </ul>

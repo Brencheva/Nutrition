@@ -1,35 +1,22 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {Recipe} from '../../interfaces/recipe';
-import {StoreField, StoreService} from '../../services/store.service';
-import {takeUntil, tap} from 'rxjs/operators';
-import {Subject} from 'rxjs';
+import { Component, OnInit } from '@angular/core';
+import { Recipe } from '../../interfaces/recipe';
+import { StoreService } from '../../services/store.service';
+import { Observable } from 'rxjs';
 
 @Component(
   {
-    selector: 'recipes',
+    selector: 'app-recipes',
     templateUrl: './recipes.component.html',
-    styleUrls: ['./recipes.component.css']
+    styleUrls: [ './recipes.component.css' ]
   }
 )
-export class RecipesComponent implements OnInit, OnDestroy {
-  recipes: Recipe[];
-
-
-  private unsubscriber = new Subject();
+export class RecipesComponent implements OnInit {
+  recipes$: Observable<Recipe[]>;
 
   constructor(private store: StoreService) {
   }
 
   ngOnInit() {
-    this.store.onStateUpdate$(StoreField.RECIPES)
-      .pipe(
-        tap((recipes: Recipe[]) => this.recipes = recipes),
-        takeUntil(this.unsubscriber)
-      )
-      .subscribe();
-  }
-
-  ngOnDestroy() {
-    this.unsubscriber.next();
+    this.recipes$ = this.store.getItem$('recipes');
   }
 }
