@@ -1,15 +1,23 @@
-<div>
-  <h2>{{recipe.label}}</h2>
+<div class="recipe">
+  <h3>{{recipe.label}}</h3>
 
   <img [src]="recipe.image" alt="recipe">
 
-  <h3>You need:</h3>
+  <h4>You need:</h4>
 
-  <ul>
+  <ul class="margin-bottom">
     <li *ngFor="let ingredient of recipe.ingredients">
       {{ingredient.text}}
     </li>
   </ul>
 
   <a [href]="recipe.url" target="_blank">Original recipe</a>
+
+  <p *ngIf="isSaved !== null">
+    <input [checked]="isSaved"
+           (change)="toggleRecipe.next(recipe)"
+           type="checkbox"
+           [id]="recipe.url">
+    <label [for]="recipe.url">Save the recipe</label>
+  </p>
 </div>

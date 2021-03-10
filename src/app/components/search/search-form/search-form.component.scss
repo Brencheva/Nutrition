@@ -9,3 +9,10 @@
     margin-right: 0;
   }
 }
+
+fieldset {
+  ul {
+    max-height: 500px;
+    overflow-y: auto;
+  }
+}

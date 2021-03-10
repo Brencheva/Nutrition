@@ -27,7 +27,7 @@ import { AppRoutingModule } from './app-routing.module';
     CommonModule,
     HttpClientModule,
     ReactiveFormsModule,
-    RouterModule
+    RouterModule,
   ],
   providers: [],
   bootstrap: [ AppComponent ]

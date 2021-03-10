@@ -7,7 +7,7 @@ import { switchMap, tap } from 'rxjs/operators';
 
 export interface SearchRecipesParams {
   q: string;
-  excluded: string;
+  excluded: string[];
   cuisineType: string[];
   dishType: string[];
   mealType: string[];

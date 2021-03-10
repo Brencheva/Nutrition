@@ -9,32 +9,34 @@
          placeholder="Insert any query"
          autofocus>
 
-  <button class="margin-right"
+  <button class="button button--secondary margin-right"
           [ngClass]="{'margin-bottom': filterIsShown}"
           type="button"
           (click)="toggleFilter()">
-    {{filterIsShown ? 'Hide filter' : 'Use filter'}}
+    {{filterIsShown ? 'Hide filter' : 'Show filter'}}
   </button>
 
-  <button type="submit"
-  [disabled]="queryForm.invalid">Get recipes</button>
+  <button class="button"
+          type="submit"
+          [disabled]="queryForm.invalid">Get recipes
+  </button>
 
   <div [hidden]="!filterIsShown"
        class="filter">
     <P>
-      <label class="margin-right"
+      <label class="display-block margin-bottom"
              for="excluded">Excluded ingredients</label>
-      <input type="text" id="excluded"
-             formControlName="excluded">
+      <textarea type="text" id="excluded"
+                formControlName="excluded"></textarea>
     </P>
     <div class="display-flex align-items-start">
       <fieldset class="filter__fieldset">
         <legend>
-          Choose prefer dish
+          Preferable dish:
         </legend>
 
-        <ul *ngFor="let dish of dishTypes">
-          <li>
+        <ul>
+          <li *ngFor="let dish of dishTypes">
             <p>
               <input [checked]="dish.checked"
                      (change)="dish.checked = !dish.checked"
@@ -48,11 +50,11 @@
 
       <fieldset class="filter__fieldset">
         <legend>
-          Choose prefer cuisine
+          Preferable cuisine:
         </legend>
 
-        <ul *ngFor="let cuisine of cuisineTypes">
-          <li>
+        <ul>
+          <li *ngFor="let cuisine of cuisineTypes">
             <p>
               <input [checked]="cuisine.checked"
                      (change)="cuisine.checked = !cuisine.checked"
@@ -66,11 +68,11 @@
 
       <fieldset class="filter__fieldset">
         <legend>
-          Choose prefer meal
+          Preferable meal:
         </legend>
 
-        <ul *ngFor="let meal of mealTypes">
-          <li>
+        <ul>
+          <li *ngFor="let meal of mealTypes">
             <p>
               <input [checked]="meal.checked"
                      (change)="meal.checked = !meal.checked"
@@ -86,30 +88,28 @@
 </form>
 
 <div *ngIf="!filterIsShown && (selectedCuisineTypes.length || selectedDishTypes.length || selectedMealTypes.length)">
-  <p>Chosen option:</p>
+  <p>Chosen options:</p>
 
-  <ol>
-    <li *ngIf="selectedCuisineTypes.length">
-      Cuisine type:
-      <ul>
-        <li *ngFor="let cuisine of selectedCuisineTypes">{{cuisine}}</li>
-      </ul>
-    </li>
+  <div *ngIf="selectedCuisineTypes.length"
+       class="margin-bottom">
+    Cuisine:
+    <span *ngFor="let cuisine of selectedCuisineTypes; index as i"
+          class="text-lowercase">{{cuisine}} {{i === selectedCuisineTypes.length - 1 ? '' : ', '}}</span>
+  </div>
 
-    <li *ngIf="selectedDishTypes.length">
-      Cuisine type:
-      <ul>
-        <li *ngFor="let dish of selectedDishTypes">{{dish}}</li>
-      </ul>
-    </li>
+  <div *ngIf="selectedDishTypes.length"
+       class="margin-bottom">
+    Dish:
+    <span *ngFor="let dish of selectedDishTypes; index as i"
+          class="text-lowercase">{{dish}} {{i === selectedDishTypes.length - 1 ? '' : ', '}}</span>
+  </div>
 
-    <li *ngIf="selectedMealTypes.length">
-      Cuisine type:
-      <ul>
-        <li *ngFor="let meal of selectedMealTypes">{{meal}}</li>
-      </ul>
-    </li>
-  </ol>
+  <div *ngIf="selectedMealTypes.length"
+       class="margin-bottom">
+    Meal:
+    <span *ngFor="let meal of selectedMealTypes; index as i"
+          class="text-lowercase">{{meal}} {{i === selectedMealTypes.length - 1 ? '' : ', '}}</span>
+  </div>
 </div>
 
 <span *ngIf="recipesIsFetching">We are looking for recipes by your query</span>

@@ -29,7 +29,7 @@ export class RecipesComponent implements OnInit {
     this.store.setItem('savedRecipes', this.savedRecipes);
   }
 
-  isFavorite(recipe: Recipe) {
+  isSaved(recipe: Recipe) {
     return this.savedRecipes.has(recipe);
   }
 }

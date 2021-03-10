@@ -56,7 +56,7 @@ export class SearchFormComponent implements OnInit {
 
     const params: SearchRecipesParams = {
       q: this.queryForm.value.query,
-      excluded: this.queryForm.value.excluded,
+      excluded: this.queryForm.value.excluded ? this.queryForm.value.excluded.split(',') : '',
       cuisineType: this.selectedCuisineTypes,
       dishType: this.selectedDishTypes,
       mealType: this.selectedMealTypes

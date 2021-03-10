@@ -1,9 +1,9 @@
-<ng-container *ngIf="recipes$ | async as recipes">
-  <div *ngFor="let recipe of recipes">
-    <app-recipe [recipe]="recipe"></app-recipe>
-  </div>
+<div *ngIf="recipes$ | async as recipes"
+     class="recipes">
+  <app-recipe *ngFor="let recipe of recipes"
+              [recipe]="recipe"></app-recipe>
 
   <p *ngIf="!recipes.size">
     No any saved recipes
   </p>
-</ng-container>
+</div>

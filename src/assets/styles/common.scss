@@ -11,6 +11,10 @@
   display: flex;
 }
 
+.display-block {
+  display: block;
+}
+
 .flex-direction-column {
   flex-direction: column;
 }
@@ -25,4 +29,8 @@
 
 .flex-grow-1 {
   flex-grow: 1;
+}
+
+.text-lowercase {
+  text-transform: lowercase;
 }
