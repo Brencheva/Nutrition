@@ -9,7 +9,7 @@ import { Store } from '../interfaces/store';
 })
 export class StoreService {
   private store: BehaviorSubject<Store>;
-  public store$: Observable<Store>;
+  store$: Observable<Store>;
 
   constructor() {
     this.store = new BehaviorSubject<Store>({
@@ -19,15 +19,11 @@ export class StoreService {
     this.store$ = this.store.asObservable();
   }
 
-  public setItem(key: keyof Store, value: any) {
+  setItem(key: keyof Store, value: any) {
     this.store.next({
       ...this.store.getValue(),
       [key]: value,
     });
-  }
-
-  public getItem(key: keyof Store): any {
-    return this.store.getValue()[key];
   }
 
   public getItem$(key: keyof Store): Observable<any> {
@@ -36,5 +32,22 @@ export class StoreService {
         map((store: Store) => store[key]),
         distinctUntilChanged(),
       );
+  }
+
+  private getItem(key: keyof Store): any {
+    return this.store.getValue()[key];
+  }
+
+
+  toggleSavedRecipe(recipe: Recipe) {
+    const savedRecipes = this.getItem('savedRecipes');
+    savedRecipes.has(recipe)
+      ? savedRecipes.delete(recipe)
+      : savedRecipes.add(recipe);
+    this.setItem('savedRecipes', savedRecipes);
+  }
+
+  isRecipeSaved(recipe: Recipe) {
+    return this.getItem('savedRecipes').has(recipe);
   }
 }
